@@ -1,0 +1,15 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ChatApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:colorPrimaryDark">@color/light_brown</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor" >@color/gray</item>
+        <item name="cornerRadius">70dp</item>
+    </style>
+
+    <style name="Theme.ChatApp" parent="Base.Theme.ChatApp" >
+    </style>
+
+
+</resources>

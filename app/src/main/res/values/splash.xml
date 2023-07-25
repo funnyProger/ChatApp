@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ChatApp.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/light_brown</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/cookies</item>
+        <item name="postSplashScreenTheme">@style/Theme.ChatApp</item>
+    </style>
+</resources>

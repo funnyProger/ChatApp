@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#252525</color>
+    <color name="light_brown">#c08457</color>
+    <color name="brown">#4E2D14</color>
+    <color name="light_brownCard">#A96D36</color>
+    <color name="brown_toolbar">#8F5520</color>
+</resources>

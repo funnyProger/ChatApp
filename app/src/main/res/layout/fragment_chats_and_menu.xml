@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".fragments.fragments_userAccount.ChatsAndMenu">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/id_constrainLayoutMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_brown">
+
+        <LinearLayout
+            android:id="@+id/id_linearLayoutChatAppIcon"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/gray"
+            android:gravity="center|start"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextSizeCheck">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/honey">
+
+
+                <ImageButton
+                    android:id="@+id/id_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:contentDescription="@string/app_name"
+                    android:paddingStart="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="7dp"
+                    android:paddingBottom="2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/menu"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/id_appName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/alfa_slab_one"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="23sp" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/id_recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/id_linearLayoutMenu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_linearLayoutChatAppIcon" />
+
+        <LinearLayout
+            android:id="@+id/id_linearLayoutMenu"
+            android:layout_width="55dp"
+            android:layout_height="0dp"
+            android:layout_alignParentEnd="true"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_linearLayoutChatAppIcon" >
+
+            <ImageButton
+                android:id="@+id/id_btnProfile"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:background="@null"
+                android:padding="3dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/profile"
+                tools:ignore="SpeakableTextPresentCheck,VisualLintBounds"
+                android:contentDescription="@string/app_name" />
+
+            <ImageButton
+                android:id="@+id/id_btnSettings"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:background="@null"
+                android:padding="2dp"
+                android:scaleType="fitXY"
+                tools:ignore="SpeakableTextPresentCheck,VisualLintBounds"
+                android:src="@drawable/settings"
+                android:contentDescription="@string/app_name" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

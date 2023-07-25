@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ChatApp</string>
+    <string name="send">Отправить</string>
+    <string name="sign_text">Hi cookie!</string>
+    <string name="login_hint">Email</string>
+    <string name="emailOrPhone">Email/Phone</string>
+    <string name="password_hint">Password</string>
+    <string name="signIn">Sign in</string>
+    <string name="signUp">Sign up</string>
+    <string name="profileName">Имя профиля…</string>
+    <string name="uniqueID">Уникальный ID…</string>
+    <string name="createProfile">Create your profile :]</string>
+    <string name="fragment_send_text_1">Укажите почту или номер телефона :)</string>
+    <string name="forgetPassword">Забыли пароль?</string>
+    <string name="fragment_send_text_2">Мы отправим письмо на почту для сброса пароля.</string>
+    <string name="next">Далее</string>
+</resources>
