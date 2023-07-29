@@ -47,11 +47,16 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
     implementation 'com.google.firebase:firebase-firestore-ktx:24.7.0'
     implementation 'com.google.firebase:firebase-storage-ktx:20.2.1'
+    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
 
     //navigation component
     def nav_version = "2.6.0"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+    //ReactiveX
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    implementation "io.reactivex.rxjava3:rxjava:3.1.5"
 
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation 'androidx.core:core-ktx:1.10.1'

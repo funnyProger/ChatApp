@@ -26,6 +26,9 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class SignIn : Fragment() {
     private lateinit var binding: FragmentSignInBinding
@@ -51,25 +54,27 @@ class SignIn : Fragment() {
         return binding.root
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         controller = findNavController()
 
-        binding.apply {
-            idConstraintSignIn.setOnClickListener {
-                onClickSignIn()
-            }
-            idConstraintSignUp.setOnClickListener {
-                onClickSignUp()
-            }
-            btnGoogleSign.setOnClickListener {
-                onClickGoogleSignIn()
-            }
-            idTextForgetPassword.setOnClickListener {
-                onClickForgetPassword()
+        GlobalScope.launch {
+            binding.apply {
+                idConstraintSignIn.setOnClickListener {
+                    onClickSignIn()
+                }
+                idConstraintSignUp.setOnClickListener {
+                    onClickSignUp()
+                }
+                btnGoogleSign.setOnClickListener {
+                    onClickGoogleSignIn()
+                }
+                idTextForgetPassword.setOnClickListener {
+                    onClickForgetPassword()
+                }
             }
         }
-
     }
 
     override fun onStart() {

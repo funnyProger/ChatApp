@@ -14,4 +14,5 @@
     <string name="forgetPassword">Забыли пароль?</string>
     <string name="fragment_send_text_2">Мы отправим письмо на почту для сброса пароля.</string>
     <string name="next">Далее</string>
+    <string name="searchUser">Введите имя пользователя…</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.funnyproger.chatapp.fragments.fragments_userAccount
+package com.funnyproger.chatapp.fragments.fragments_SignIn
 
 import android.net.Uri
 import android.os.Bundle
@@ -20,9 +20,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CreateProfile : Fragment() {
     private lateinit var binding: FragmentCreateProfileBinding
@@ -43,6 +45,7 @@ class CreateProfile : Fragment() {
         return binding.root
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //initialization
@@ -63,14 +66,18 @@ class CreateProfile : Fragment() {
 
         //listeners
         binding.apply {
-            idBtnNext.setOnClickListener {
-                if(validateUserName()) {
-                    Constants.userName = userProfileName
-                    addUserDataToDatabase()
+            GlobalScope.launch {
+                idBtnNext.setOnClickListener {
+                    if(validateUserName()) {
+
+                        Toast.makeText(activity, "Loading...", Toast.LENGTH_LONG).show()
+                        Constants.userName = userProfileName
+                        addUserDataToDatabase()
+                    }
                 }
-            }
-            idBtnSelectAvatar.setOnClickListener {
-                launcher.launch("image/*")
+                idBtnSelectAvatar.setOnClickListener {
+                    launcher.launch("image/*")
+                }
             }
         }
     }
@@ -120,6 +127,7 @@ class CreateProfile : Fragment() {
                     storageReference.child("images/${userModel.userID}").putFile(it)
                         .addOnSuccessListener {
                             Toast.makeText(activity, "Data saved successfully!", Toast.LENGTH_LONG).show()
+
                             controller.navigate(R.id.action_createProfile_to_chatsAndMenu)
                         }.addOnFailureListener {
                             Toast.makeText(activity, "Data not saved!", Toast.LENGTH_LONG).show()

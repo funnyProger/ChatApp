@@ -105,6 +105,17 @@
                 tools:ignore="SpeakableTextPresentCheck,VisualLintBounds"
                 android:src="@drawable/settings"
                 android:contentDescription="@string/app_name" />
+
+            <ImageButton
+                android:id="@+id/id_btnSearch"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:background="@null"
+                android:contentDescription="@string/app_name"
+                android:padding="2dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/search"
+                tools:ignore="SpeakableTextPresentCheck,VisualLintBounds" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

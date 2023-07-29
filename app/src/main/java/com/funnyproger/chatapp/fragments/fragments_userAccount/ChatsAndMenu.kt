@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.funnyproger.chatapp.R
 import com.funnyproger.chatapp.databinding.FragmentChatsAndMenuBinding
@@ -16,6 +18,7 @@ class ChatsAndMenu : Fragment() {
     private lateinit var binding:FragmentChatsAndMenuBinding
     private lateinit var chatsAdapter: ChatsAdapter
     private var chatsList = mutableListOf<ChatsModel>()
+    private lateinit var controller: NavController
     private lateinit var userModel: UserModel
 
     private var chatsMap = mutableMapOf(
@@ -48,11 +51,25 @@ class ChatsAndMenu : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        controller = findNavController()
         chatsAdapter = ChatsAdapter()
         binding.apply {
             idRecyclerView.layoutManager = GridLayoutManager(activity, 1)
             idRecyclerView.adapter = chatsAdapter
             chatsAdapter.setList(getNewChatsList(chatsMap))
+        }
+
+        //listeners
+        binding.apply {
+            idBtnSearch.setOnClickListener {
+                onClickSearch()
+            }
+            idBtnProfile.setOnClickListener {
+
+            }
+            idBtnSettings.setOnClickListener {
+
+            }
         }
     }
 
@@ -62,6 +79,11 @@ class ChatsAndMenu : Fragment() {
             chatsList.add(ChatsModel(it.value, it.key))
         }
         return chatsList
+    }
+
+
+    private fun onClickSearch() {
+        controller.navigate(R.id.action_chatsAndMenu_to_searchUser)
     }
 
 

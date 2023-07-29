@@ -18,7 +18,11 @@
         android:id="@+id/chatsAndMenu"
         android:name="com.funnyproger.chatapp.fragments.fragments_userAccount.ChatsAndMenu"
         android:label="fragment_chats_and_menu"
-        tools:layout="@layout/fragment_chats_and_menu" />
+        tools:layout="@layout/fragment_chats_and_menu" >
+        <action
+            android:id="@+id/action_chatsAndMenu_to_searchUser"
+            app:destination="@id/searchUser" />
+    </fragment>
     <fragment
         android:id="@+id/signIn"
         android:name="com.funnyproger.chatapp.fragments.fragments_SignIn.SignIn"
@@ -36,11 +40,20 @@
     </fragment>
     <fragment
         android:id="@+id/createProfile"
-        android:name="com.funnyproger.chatapp.fragments.fragments_userAccount.CreateProfile"
+        android:name="com.funnyproger.chatapp.fragments.fragments_SignIn.CreateProfile"
         android:label="fragment_create_profile"
         tools:layout="@layout/fragment_create_profile" >
         <action
             android:id="@+id/action_createProfile_to_chatsAndMenu"
+            app:destination="@id/chatsAndMenu" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchUser"
+        android:name="com.funnyproger.chatapp.fragments.fragments_userAccount.search.SearchUser"
+        android:label="fragment_search_user"
+        tools:layout="@layout/fragment_search_user" >
+        <action
+            android:id="@+id/action_searchUser_to_chatsAndMenu"
             app:destination="@id/chatsAndMenu" />
     </fragment>
 </navigation>
