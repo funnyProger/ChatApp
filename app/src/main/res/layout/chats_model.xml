@@ -18,7 +18,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
-            android:id="@+id/id_imageViewCharImage"
+            android:id="@+id/id_image_view_chat_image"
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:background="@null"

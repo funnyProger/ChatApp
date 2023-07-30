@@ -1,37 +1,33 @@
 package com.funnyproger.chatapp.fragments.fragments_userAccount.search
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.funnyproger.chatapp.R
 import com.funnyproger.chatapp.constants.Constants
 import com.funnyproger.chatapp.databinding.FragmentSearchUserBinding
+import com.funnyproger.chatapp.fragments.fragments_userAccount.adapter.SearchAdapter
+import com.funnyproger.chatapp.fragments.fragments_userAccount.models.SearchModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 class SearchUser : Fragment() {
     private lateinit var binding: FragmentSearchUserBinding
@@ -59,104 +55,94 @@ class SearchUser : Fragment() {
         searchAdapter = SearchAdapter()
         firebaseFirestore = Firebase.firestore
         storageReference = Firebase.storage.reference
-        nameMap.clear()
-
-        GlobalScope.launch {
-            metod()
-            cancel()
-        }
 
         binding.apply {
+            idImgBtnReturnOnChatsAndMenuFragment.setOnClickListener {
+                controller.navigate(R.id.action_searchUser_to_chatsAndMenu)
+            }
+
             idRecyclerViewSearchUser.layoutManager = GridLayoutManager(activity, 1)
             idRecyclerViewSearchUser.adapter = searchAdapter
         }
+        search()
     }
 
-    private fun createSearchTextChangeObservable(idEditTextSearch: EditText): Observable<String> {
-        val textChangeObservable = Observable.create<String> {emitter ->
-            val textWatcher = object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    emitter.onNext(s.toString())
+
+    @SuppressLint("CheckResult")
+    private fun search() {
+        Observable.create<String> {emitter ->
+            binding.idEditTextSearch.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
-                override fun afterTextChanged(s: Editable?) = Unit
-            }
 
-            idEditTextSearch.addTextChangedListener(textWatcher)
-        }
-        return textChangeObservable
-    }
-
-
-
-
-
-
-    private fun createSearchTextObserver(): Observer<String> {
-        return object : Observer<String> {
-            override fun onSubscribe(d: Disposable) {
-            }
-
-            override fun onError(e: Throwable) {
-            }
-
-            override fun onComplete() {
-            }
-
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onNext(t: String) {
-                if(nameMap.isEmpty()) {
-                    Toast.makeText(activity, "Data not received :(", Toast.LENGTH_LONG).show()
-                } else {
-                    searchUserList.clear()
-                    if (t == "") {
-                        searchAdapter.setList(searchUserList)
-                    } else {
-                        for (map in nameMap) {
-                            if (map.value.contains(t)) {
-                                val strRef = storageReference.child("images/${map.key}")
-                                strRef.downloadUrl.addOnSuccessListener {
-                                    searchUserList.add(SearchModel(it, map.value))
-                                }
-                                    .addOnFailureListener {
-                                        //Toast.makeText(activity, "Data not downloaded :(", Toast.LENGTH_LONG).show()
-                                    }
-                            }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if(!emitter.isDisposed) {
+                        if(s.toString() == "") {
+                            nameMap.clear()
+                            searchUserList.clear()
+                            searchAdapter.setList(searchUserList)
+                        } else {
+                            nameMap.clear()
+                            searchUserList.clear()
+                            searchAdapter.setList(searchUserList)
+                            emitter.onNext(s.toString())
                         }
-                        searchAdapter.setList(searchUserList)
                     }
                 }
 
-            }
+                override fun afterTextChanged(s: Editable?) {
+                }
 
+            })
         }
-
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    Log.d(TAG, "Search: $it")
+                    searchUserName(it)
+                },
+                {
+                    Log.e(TAG, "Error: $it")
+                },
+                {
+                    Log.d(TAG, "Complete")
+                }
+            )
     }
 
-    private fun getAllUsersFromDB(){
+    private fun searchUserName(str: String) {
         firebaseFirestore.collection("users")
             .get()
             .addOnSuccessListener {result ->
                 for(document in result) {
-                    nameMap[document.id] = document.data["userName"].toString()
+                    if(document.data["userName"].toString().contains(str)) {
+                        nameMap[document.id] = document.data["userName"].toString()
+                    }
                 }
+                searchUserImage()
             }
             .addOnFailureListener {
                 Toast.makeText(activity, "Error getting database documents :(", Toast.LENGTH_LONG).show()
             }
     }
 
-    private suspend fun metod() = coroutineScope {
-        val job: Job = launch {
-            getAllUsersFromDB()
+    private fun searchUserImage() {
+        for (map in nameMap) {
+            storageReference.child("images/${map.key}").downloadUrl.addOnSuccessListener {
+                searchUserList.add(SearchModel(it, map.value))
+            }
+                .addOnFailureListener {
+                    //Toast.makeText(activity, "Data not downloaded :(", Toast.LENGTH_LONG).show()
+                }
         }
-        job.join()
-
-        //create observable and observer, subscribe observer to observable
-        binding.apply {
-            val observer = createSearchTextObserver()
-            val searchTextObservable = createSearchTextChangeObservable(idEditTextSearch)
-            searchTextObservable.subscribe(observer)
-        }
+        searchAdapter.setList(searchUserList)
     }
+
+
 }

@@ -7,32 +7,48 @@
     android:background="@color/light_brown"
     tools:context=".fragments.fragments_userAccount.search.SearchUser">
 
-    <FrameLayout
-        android:id="@+id/id_frameLayoutSearch"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/gray">
+        android:background="@color/gray"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/id_editTextSearch"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:autofillHints=""
             android:backgroundTint="@color/white"
             android:ems="10"
             android:hint="@string/searchUser"
             android:inputType="text"
+            android:layout_weight="3"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            tools:ignore="LabelFor,VisualLintTextFieldSize" />
+            tools:ignore="LabelFor,VisualLintTextFieldSize"
+            android:autofillHints="" />
 
-    </FrameLayout>
+        <ImageButton
+            android:id="@+id/id_imgBtnReturnOnChatsAndMenuFragment"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="#252525"
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.32"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/id_recyclerViewSearchUser"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="47dp">
+        android:layout_marginTop="47dp"
+        android:focusedByDefault="false">
 
     </androidx.recyclerview.widget.RecyclerView>
 
